@@ -1,3 +1,12 @@
+# android studio
+.idea/workspace.xml
+.idea/libraries/
+
+captures/
+
+# mac stuff
+.DS_STORE
+
 # Built application files
 *.apk
 *.ap_
