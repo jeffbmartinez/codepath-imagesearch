@@ -6,13 +6,13 @@ It is [Assignment #2](http://courses.codepath.com/courses/intro_to_android/unit/
 
 Submitted by: **Jeff Martinez**
 
-Time spent: ~**0** hours spent in total
+Time spent: ~**2** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
-* [ ] User can enter a search query that will display a grid of image results from the Google Image API.
+* [X] User can enter a search query that will display a grid of image results from the Google Image API.
 * [ ] User can click on "settings" which allows selection of advanced search options to filter results
 * [ ] User can configure advanced search filters such as:
     * [ ] Size (small, medium, large, extra-large)
@@ -20,7 +20,7 @@ The following **required** functionality is completed:
     * [ ] Type (faces, photo, clip art, line art)
     * [ ] Site (espn.com)
 * [ ] Subsequent searches will have any filters applied to the search results
-* [ ] User can tap on any image in results to see the image full-screen
+* [X] User can tap on any image in results to see the image full-screen
 * [ ] User can [scroll down “infinitely”](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews) to continue loading more image results (up to 8 pages)
 
 The following **optional** features are implemented:
@@ -53,7 +53,7 @@ GIFs created with [LiceCap](http://www.cockos.com/licecap/).
 
 ### Challenges encountered
 
-* ...
+* `getActionBar().hide()` was throwing a null pointer exception for me. The fix was to use `getSupportActionBar().hide()` instead, which from what I've read, is the safer way to do this.
 
 ## Open Source Libraries Used
 
