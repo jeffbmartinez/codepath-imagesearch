@@ -25,6 +25,8 @@ public class FiltersActivity extends AppCompatActivity {
     private Spinner spImageType;
     private Spinner spImageFiletype;
 
+    private EditText etSiteFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,11 @@ public class FiltersActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         populateSpinners();
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        String siteFilter = pref.getString(SITE_FILTER, "");
+        etSiteFilter = (EditText) findViewById(R.id.etSiteFilter);
+        etSiteFilter.setText(siteFilter);
     }
 
     private void populateSpinners() {
@@ -81,7 +88,6 @@ public class FiltersActivity extends AppCompatActivity {
         int type = spImageType.getSelectedItemPosition();
         int filetype = spImageFiletype.getSelectedItemPosition();
 
-        EditText etSiteFilter = (EditText) findViewById(R.id.etSiteFilter);
         String siteFilter = etSiteFilter.getText().toString();
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
