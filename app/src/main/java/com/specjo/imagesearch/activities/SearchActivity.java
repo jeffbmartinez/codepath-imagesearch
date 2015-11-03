@@ -17,6 +17,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.specjo.imagesearch.R;
 import com.specjo.imagesearch.adapters.ImageResultsAdapter;
+import com.specjo.imagesearch.listeners.EndlessScrollListener;
 import com.specjo.imagesearch.models.ImageResult;
 
 import org.json.JSONArray;
@@ -29,14 +30,16 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class SearchActivity extends AppCompatActivity {
+    private final static String BASE_URL = "https://ajax.googleapis.com/ajax/services/search/images";
+    public static final int QUERY_PAGE_SIZE = 8;
+
     private EditText etQuery;
     private GridView gvResults;
 
     private List<ImageResult> imageResults;
-
     private ImageResultsAdapter aImageResults;
 
-    private final static String BASE_URL = "https://ajax.googleapis.com/ajax/services/search/images";
+    private EndlessScrollListener endlessScrollListener;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,13 +58,36 @@ public class SearchActivity extends AppCompatActivity {
         imageResults = new ArrayList<>();
         aImageResults = new ImageResultsAdapter(this, imageResults);
         gvResults.setAdapter(aImageResults);
+
+        endlessScrollListener = new EndlessScrollListener() {
+
+            @Override
+            public boolean onLoadMore(int page, int totalItemsCount) {
+                customLoadMoreDataFromApi(page);
+                return true;
+            }
+        };
+        gvResults.setOnScrollListener(endlessScrollListener);
+    }
+
+    public void customLoadMoreDataFromApi(int offset) {
+        if (offset >= QUERY_PAGE_SIZE) {
+            Toast.makeText(this, "Google says no more images allowed :(", Toast.LENGTH_SHORT).show();
+        } else {
+            searchForPictures(offset, false);
+        }
     }
 
     public void onImageSearch(View view) {
+        endlessScrollListener.reset();
+        searchForPictures(1, true);
+    }
+
+    private void searchForPictures(int page, final boolean clearExisting) {
         String query = etQuery.getText().toString();
-        Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
 
         String searchUrl = buildQueryUrl(query);
+        searchUrl += "&start=" + ((page - 1) * QUERY_PAGE_SIZE);
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(searchUrl, new JsonHttpResponseHandler() {
@@ -70,7 +96,9 @@ public class SearchActivity extends AppCompatActivity {
                     JSONObject responseData = response.getJSONObject("responseData");
                     JSONArray resultsJson = responseData.getJSONArray("results");
 
-                    imageResults.clear();
+                    if (clearExisting) {
+                        imageResults.clear();
+                    }
                     aImageResults.addAll(ImageResult.fromJSONArray(resultsJson));
                 } catch (JSONException e) {
                     Toast.makeText(SearchActivity.this, "Couldn't get images :(", Toast.LENGTH_SHORT).show();
@@ -85,7 +113,7 @@ public class SearchActivity extends AppCompatActivity {
         queryUrl.append(query);
 
         queryUrl.append("&v=1.0");
-        queryUrl.append("&rsz=8");
+        queryUrl.append("&rsz=" + QUERY_PAGE_SIZE);
 
         queryUrl.append(getSearchUrlPart("imgsz", FiltersActivity.SIZE, R.array.entries_image_size_preference));
         queryUrl.append(getSearchUrlPart("imgcolor", FiltersActivity.COLOR, R.array.entries_image_color_preference));
@@ -135,8 +163,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onSettingsAction(MenuItem item) {
-        Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
-
         Intent showSettings = new Intent(this, FiltersActivity.class);
         startActivity(showSettings);
     }

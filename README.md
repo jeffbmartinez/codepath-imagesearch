@@ -21,7 +21,7 @@ The following **required** functionality is completed:
     * [X] Site (espn.com)
 * [X] Subsequent searches will have any filters applied to the search results
 * [X] User can tap on any image in results to see the image full-screen
-* [ ] User can [scroll down “infinitely”](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews) to continue loading more image results (up to 8 pages)
+* [X] User can [scroll down “infinitely”](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews) to continue loading more image results (up to 8 pages)
 
 The following **optional** features are implemented:
 
@@ -57,6 +57,7 @@ GIFs created with [LiceCap](http://www.cockos.com/licecap/).
 * `getActionBar().hide()` was throwing a null pointer exception for me. The fix was to use `getSupport* ActionBar().hide()` instead, which from what I've read, is the safer way to do this.
 * I tried changing the type of the data I was storing with SharedPreferences at some point during development. When I tried retrieving the data with a key of a new type, I was getting a type conversion error. It took me a bit of troubleshooting before I realized it was just reusing the previously stored key. I programmitically cleared the old stored data with `clear()` and the app worked as expected.
 * I can't seem to get `imgcolor` and `imgtype` to work as expected. Regardless of the argumenet passed in, the api behaves as if it's not there.
+* Endless scrolling worked fine for my first search, but doing a subsequent search broke the endless scroll. I was able to fix it by reseting the state of the `EndlessScrollListener` instance.
 
 ## Open Source Libraries Used
 
