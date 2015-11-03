@@ -87,12 +87,17 @@ public class SearchActivity extends AppCompatActivity {
         queryUrl.append("&v=1.0");
         queryUrl.append("&rsz=8");
 
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-
         queryUrl.append(getSearchUrlPart("imgsz", FiltersActivity.SIZE, R.array.entries_image_size_preference));
         queryUrl.append(getSearchUrlPart("imgcolor", FiltersActivity.COLOR, R.array.entries_image_color_preference));
         queryUrl.append(getSearchUrlPart("imgtype", FiltersActivity.TYPE, R.array.entries_image_type_preference));
         queryUrl.append(getSearchUrlPart("as_filetype", FiltersActivity.FILETYPE, R.array.entries_image_filetype_preference));
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        String savedSiteFilter = pref.getString(FiltersActivity.SITE_FILTER, "");
+        if (!savedSiteFilter.isEmpty()) {
+            queryUrl.append("&as_sitesearch=");
+            queryUrl.append(savedSiteFilter);
+        }
 
         return queryUrl.toString();
     }

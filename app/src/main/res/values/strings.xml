@@ -14,6 +14,6 @@
     <string name="image_filetype_label">File Type</string>
     <string name="image_site_label">Site Filter</string>
     <string name="button_save_label">Save Settings</string>
-
-
+    <string name="site_filter_label">Site Filter</string>
+    <string name="site_filter_hint">photobucket.com</string>
 </resources>

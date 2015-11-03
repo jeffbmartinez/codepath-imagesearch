@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.specjo.imagesearch.R;
@@ -15,6 +16,7 @@ public class FiltersActivity extends AppCompatActivity {
     public static final String COLOR = "color";
     public static final String TYPE = "type";
     public static final String FILETYPE = "filetype";
+    public static final String SITE_FILTER = "siteFilter";
 
     public static final int NO_FILTER = 0;
 
@@ -79,12 +81,16 @@ public class FiltersActivity extends AppCompatActivity {
         int type = spImageType.getSelectedItemPosition();
         int filetype = spImageFiletype.getSelectedItemPosition();
 
+        EditText etSiteFilter = (EditText) findViewById(R.id.etSiteFilter);
+        String siteFilter = etSiteFilter.getText().toString();
+
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor edit = pref.edit();
         edit.putInt(SIZE, size);
         edit.putInt(COLOR, color);
         edit.putInt(TYPE, type);
         edit.putInt(FILETYPE, filetype);
+        edit.putString(SITE_FILTER, siteFilter);
         edit.commit();
 
         finish();

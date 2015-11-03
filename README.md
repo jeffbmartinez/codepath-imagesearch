@@ -13,13 +13,13 @@ Time spent: ~**5** hours spent in total
 The following **required** functionality is completed:
 
 * [X] User can enter a search query that will display a grid of image results from the Google Image API.
-* [ ] User can click on "settings" which allows selection of advanced search options to filter results
-* [ ] User can configure advanced search filters such as:
-    * [ ] Size (small, medium, large, extra-large)
-    * [ ] Color filter (black, blue, brown, gray, green, etc...)
-    * [ ] Type (faces, photo, clip art, line art)
-    * [ ] Site (espn.com)
-* [ ] Subsequent searches will have any filters applied to the search results
+* [X] User can click on "settings" which allows selection of advanced search options to filter results
+* [X] User can configure advanced search filters such as:
+    * [X] Size (small, medium, large, extra-large)
+    * [X] Color filter (black, blue, brown, gray, green, etc...)
+    * [X] Type (faces, photo, clip art, line art)
+    * [X] Site (espn.com)
+* [X] Subsequent searches will have any filters applied to the search results
 * [X] User can tap on any image in results to see the image full-screen
 * [ ] User can [scroll down “infinitely”](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews) to continue loading more image results (up to 8 pages)
 
@@ -36,6 +36,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 * [X] The app stores previously selected search filters even after the app is turned off, using `SharedPreferences`.
+* [X] Added file extension type to search params (jpg, png, etc)
 
 ## Video Walkthrough
 
