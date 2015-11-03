@@ -6,7 +6,7 @@ It is [Assignment #2](http://courses.codepath.com/courses/intro_to_android/unit/
 
 Submitted by: **Jeff Martinez**
 
-Time spent: ~**5** hours spent in total
+Time spent: ~**8** hours spent in total
 
 ## User Stories
 
@@ -31,7 +31,7 @@ The following **optional** features are implemented:
 * [ ] **Advanced**: Replace Filter Settings Activity with a lightweight [modal overlay](http://guides.codepath.com/android/Using-DialogFragment)
 * [ ] **Advanced**: Improve the user interface and experiment with image assets and/or styling and coloring
 * [ ] **Bonus**: Use the [StaggeredGridView](https://github.com/f-barth/AndroidStaggeredGrid) to display improve the grid of image results
-* [ ] **Bonus**: User can [zoom or pan images](https://github.com/MikeOrtiz/TouchImageView) displayed in full-screen detail view
+* [X] **Bonus**: User can [zoom or pan images](https://github.com/MikeOrtiz/TouchImageView) displayed in full-screen detail view
 
 The following **additional** features are implemented:
 
@@ -40,13 +40,7 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-With required functionality:
-
-![Video Walkthrough 1](walkthrough.gif)
-
-With additional functionality:
-
-![Video Walkthrough 2](walkthrough2.gif)
+![Video Walkthrough](walkthrough.gif)
 
 GIFs created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -58,11 +52,13 @@ GIFs created with [LiceCap](http://www.cockos.com/licecap/).
 * I tried changing the type of the data I was storing with SharedPreferences at some point during development. When I tried retrieving the data with a key of a new type, I was getting a type conversion error. It took me a bit of troubleshooting before I realized it was just reusing the previously stored key. I programmitically cleared the old stored data with `clear()` and the app worked as expected.
 * I can't seem to get `imgcolor` and `imgtype` to work as expected. Regardless of the argumenet passed in, the api behaves as if it's not there.
 * Endless scrolling worked fine for my first search, but doing a subsequent search broke the endless scroll. I was able to fix it by reseting the state of the `EndlessScrollListener` instance.
+* Using TouchImageView as a direct drop-in for ImageView did not work 100%. For some reason which I still don't understand, the image would not show up until I zoomed around. I found that setting the zoom level to 1.0 did the trick and caused it to show up.
 
 ## Open Source Libraries Used
 
 * [James Smith's Android Asynchronous Http Client](http://loopj.com/android-async-http/)
 * [Square's Picasso](http://square.github.io/picasso/)
+* [Mike Ortiz' TouchImageView](https://github.com/MikeOrtiz/TouchImageView)
 
 ## License
 
