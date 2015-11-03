@@ -35,7 +35,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] ...
+* [X] The app stores previously selected search filters even after the app is turned off, using `SharedPreferences`.
 
 ## Video Walkthrough 
 
@@ -53,7 +53,8 @@ GIFs created with [LiceCap](http://www.cockos.com/licecap/).
 
 ### Challenges encountered
 
-* `getActionBar().hide()` was throwing a null pointer exception for me. The fix was to use `getSupportActionBar().hide()` instead, which from what I've read, is the safer way to do this.
+* `getActionBar().hide()` was throwing a null pointer exception for me. The fix was to use `getSupport* ActionBar().hide()` instead, which from what I've read, is the safer way to do this.
+* I tried changing the type of the data I was storing with SharedPreferences at some point during development. When I tried retrieving the data with a key of a new type, I was getting a type conversion error. It took me a bit of troubleshooting before I realized it was just reusing the previously stored key. I programmitically cleared the old stored data with `clear()` and the app worked as expected.
 
 ## Open Source Libraries Used
 

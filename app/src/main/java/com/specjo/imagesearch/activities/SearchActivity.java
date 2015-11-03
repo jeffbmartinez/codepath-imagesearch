@@ -3,6 +3,8 @@ package com.specjo.imagesearch.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -33,6 +35,13 @@ public class SearchActivity extends AppCompatActivity {
     private ImageResultsAdapter aImageResults;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.image_filters, menu);
+
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -47,6 +56,9 @@ public class SearchActivity extends AppCompatActivity {
     public void onImageSearch(View view) {
         String query = etQuery.getText().toString();
         Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
+
+        // Grab search filters from preferences
+        // http://guides.codepath.com/android/Persisting-Data-to-the-Device#shared-preferences
 
         String searchUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + query + "&rsz=8";
         AsyncHttpClient client = new AsyncHttpClient();
@@ -78,5 +90,12 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(showImageIntent);
             }
         });
+    }
+
+    public void onSettingsAction(MenuItem item) {
+        Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
+
+        Intent showSettings = new Intent(this, FiltersActivity.class);
+        startActivity(showSettings);
     }
 }
