@@ -2,10 +2,10 @@
 <resources>
     <string-array name="entries_image_size_preference">
         <item>none</item>
-        <item>small</item>
+        <item>icon</item>
         <item>medium</item>
-        <item>large</item>
-        <item>xlarge</item>
+        <item>xxlarge</item>
+        <item>huge</item>
     </string-array>
 
     <string-array name="entries_image_color_preference">

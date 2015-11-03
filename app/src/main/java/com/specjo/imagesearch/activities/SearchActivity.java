@@ -1,7 +1,9 @@
 package com.specjo.imagesearch.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +36,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private ImageResultsAdapter aImageResults;
 
+    private final static String BASE_URL = "https://ajax.googleapis.com/ajax/services/search/images";
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.image_filters, menu);
@@ -57,10 +61,8 @@ public class SearchActivity extends AppCompatActivity {
         String query = etQuery.getText().toString();
         Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
 
-        // Grab search filters from preferences
-        // http://guides.codepath.com/android/Persisting-Data-to-the-Device#shared-preferences
+        String searchUrl = buildQueryUrl(query);
 
-        String searchUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + query + "&rsz=8";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(searchUrl, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -75,6 +77,41 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String buildQueryUrl(String query) {
+        StringBuilder queryUrl = new StringBuilder(BASE_URL);
+        queryUrl.append("?q=");
+        queryUrl.append(query);
+
+        queryUrl.append("&v=1.0");
+        queryUrl.append("&rsz=8");
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        queryUrl.append(getSearchUrlPart("imgsz", FiltersActivity.SIZE, R.array.entries_image_size_preference));
+        queryUrl.append(getSearchUrlPart("imgcolor", FiltersActivity.COLOR, R.array.entries_image_color_preference));
+        queryUrl.append(getSearchUrlPart("imgtype", FiltersActivity.TYPE, R.array.entries_image_type_preference));
+        queryUrl.append(getSearchUrlPart("as_filetype", FiltersActivity.FILETYPE, R.array.entries_image_filetype_preference));
+
+        return queryUrl.toString();
+    }
+
+    private String getSearchUrlPart(String urlKey, String preferenceKey, int arrayResource) {
+        StringBuilder urlPart = new StringBuilder("");
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        int savedValue = pref.getInt(preferenceKey, FiltersActivity.NO_FILTER);
+        if (savedValue != FiltersActivity.NO_FILTER) {
+            String[] values = getResources().getStringArray(arrayResource);
+
+            urlPart.append("&");
+            urlPart.append(urlKey);
+            urlPart.append("=");
+            urlPart.append(values[savedValue]);
+        }
+
+        return urlPart.toString();
     }
 
     private void setupViews() {

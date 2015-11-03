@@ -16,6 +16,8 @@ public class FiltersActivity extends AppCompatActivity {
     public static final String TYPE = "type";
     public static final String FILETYPE = "filetype";
 
+    public static final int NO_FILTER = 0;
+
     private Spinner spImageSize;
     private Spinner spImageColor;
     private Spinner spImageType;
@@ -41,9 +43,7 @@ public class FiltersActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item);
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spImageSize.setAdapter(sizeAdapter);
-
-        int bla = pref.getInt(SIZE, 0);
-        spImageSize.setSelection(bla);
+        spImageSize.setSelection(pref.getInt(SIZE, 0));
 
         spImageColor = (Spinner) findViewById(R.id.spImageColor);
         ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(
